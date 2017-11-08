@@ -1604,4 +1604,14 @@ test.group('Model', (group) => {
     assert.equal(user.username, 'foo')
     assert.equal(user.vid, 2)
   })
+
+  test('model from ioc', (assert) => {
+    ioc.bind('UserModel', () => {
+      class User extends Model {
+      }
+      return User
+    })
+    assert.isTrue(ioc.use('UserModel').$booted)
+    assert.isTrue(ioc.make('UserModel').$booted)
+  })
 })
